@@ -1,6 +1,7 @@
 package `in`.zipgo.aabhasjindal.newsapp.di.module
 
 import `in`.zipgo.aabhasjindal.newsapp.BuildConfig
+import `in`.zipgo.aabhasjindal.newsapp.data.network.api_groups.Api
 import `in`.zipgo.aabhasjindal.newsapp.di.scope.AppScope
 import android.util.Log
 import com.google.gson.Gson
