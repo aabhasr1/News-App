@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "in.zipgo.aabhasjindal.newsapp"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionMajor + "." + versions.versionMinor
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.core:core-ktx:1.0.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    // dependency injection
+    implementation "com.google.dagger:dagger:$versions.dagger2Version"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$versions.dagger2Version"
+    implementation "com.google.dagger:dagger-android-support:$versions.dagger2Version"
+    kapt "com.google.dagger:dagger-compiler:$versions.dagger2Version"
+    kapt "com.google.dagger:dagger-android-processor:$versions.dagger2Version"
+
+    // reactive
+//    implementation "io.reactivex.rxjava2:rxkotlin:$versions.rxKotlinVersion"
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+    implementation "io.reactivex.rxjava2:rxandroid:$versions.rxandroidVersion"
+    implementation "com.jakewharton.rxbinding3:rxbinding:$versions.rxbinding"
+    implementation "com.jakewharton.rxbinding2:rxbinding:$versions.rxkotlinbinding"
+
+    //  network
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$versions.retrofit_adapter_rxjava"
+    implementation "com.squareup.retrofit2:converter-gson:$versions.retrofit_converter_gson"
+    implementation "com.squareup.okhttp3:okhttp:$versions.okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
+    implementation "com.android.volley:volley:$versions.volley"
+
+
+    implementation "com.jakewharton.timber:timber:$versions.timberVersion"
+    implementation 'android.arch.navigation:navigation-fragment:1.0.0-rc02'
+    implementation 'android.arch.navigation:navigation-ui:1.0.0-rc02'
+
+}
