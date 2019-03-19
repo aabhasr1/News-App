@@ -1,14 +1,11 @@
 package `in`.zipgo.aabhasjindal.newsapp.ui.base
 
+import `in`.zipgo.aabhasjindal.newsapp.data.model.ErrorDialogData
 import `in`.zipgo.aabhasjindal.newsapp.data.rx.Variable
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 
 open class BaseViewModel : ViewModel() {
-
-
-    val isLoading = Variable(false)
-
 
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -17,7 +14,5 @@ open class BaseViewModel : ViewModel() {
         super.onCleared()
     }
 
-    fun setIsLoading(isLoading: Boolean) {
-        this.isLoading.value = isLoading
-    }
+    var errorDialogData: Variable<ErrorDialogData> = Variable(ErrorDialogData(null, null))
 }

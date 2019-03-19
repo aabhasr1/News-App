@@ -1,5 +1,6 @@
 package `in`.zipgo.aabhasjindal.newsapp
 
+import `in`.zipgo.aabhasjindal.newsapp.di.DaggerAppComponent
 import android.content.Context
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication

@@ -1,10 +1,7 @@
 package `in`.zipgo.aabhasjindal.newsapp.di.module
 
 import `in`.zipgo.aabhasjindal.newsapp.di.scope.ActivityScoped
-import `in`.zipgo.aabhasjindal.newsapp.di.scope.FragmentScoped
-import `in`.zipgo.aabhasjindal.newsapp.ui.main.MainActivity
-import `in`.zipgo.aabhasjindal.newsapp.ui.modules.SplashFragment
-import `in`.zipgo.aabhasjindal.newsapp.ui.modules.auth.SignInFragment
+import `in`.zipgo.aabhasjindal.newsapp.ui.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -30,13 +27,13 @@ abstract class ActivityBindingModule {
     @ContributesAndroidInjector
     abstract fun app(): MainActivity
 
-    //    @JvmStatic
-    @FragmentScoped
-    @ContributesAndroidInjector
-    abstract fun signInFragment(): SignInFragment
-
-    //    @JvmStatic
-    @FragmentScoped
-    @ContributesAndroidInjector
-    abstract fun splashFragment(): SplashFragment
+//    //    @JvmStatic
+//    @FragmentScoped
+//    @ContributesAndroidInjector
+//    abstract fun signInFragment(): SignInFragment
+//
+//    //    @JvmStatic
+//    @FragmentScoped
+//    @ContributesAndroidInjector
+//    abstract fun splashFragment(): SplashFragment
 }

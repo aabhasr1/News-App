@@ -1,20 +1,27 @@
 package `in`.zipgo.aabhasjindal.newsapp.data.model
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class ApiResponse<T> {
+open class BaseApiResponse {
+    companion object {
+        val STATUS_OK = "ok"
+        val STATUS_ERROR = "error"
+    }
 
     @SerializedName("status_code")
+    @Expose
     var status_code: Int = 0
 
-    @SerializedName("errors")
-    var errorBody: Errors? = null
+    @SerializedName("code")
+    @Expose
+    var errorCode: String? = null
 
-    @SerializedName("data")
-    var data: T? = null
+    @SerializedName("message")
+    @Expose
+    var errorBody: String? = null
 
     @SerializedName("status")
-    var status: Boolean = false
-
-
+    @Expose
+    var status: String? = null
 }

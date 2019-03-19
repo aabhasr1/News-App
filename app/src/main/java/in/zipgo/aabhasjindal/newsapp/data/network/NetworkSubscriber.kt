@@ -1,9 +1,9 @@
 package `in`.zipgo.aabhasjindal.newsapp.data.network
 
-import `in`.zipgo.aabhasjindal.newsapp.data.model.ApiResponse
+import `in`.zipgo.aabhasjindal.newsapp.data.model.BaseApiResponse
 import `in`.zipgo.aabhasjindal.newsapp.data.model.ErrorDialogData
 import `in`.zipgo.aabhasjindal.newsapp.data.model.Errors
-import `in`.zipgo.aabhasjindal.newsapp.ui.base.DaggerViewModel
+import `in`.zipgo.aabhasjindal.newsapp.ui.base.BaseViewModel
 import com.google.gson.Gson
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
 import io.reactivex.observers.DisposableObserver
@@ -14,11 +14,11 @@ import java.lang.ref.WeakReference
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-abstract class NetworkSubscriber<T>(viewModel: DaggerViewModel) : DisposableObserver<ApiResponse<T>>() {
+abstract class NetworkSubscriber<T>(viewModel: BaseViewModel) : DisposableObserver<BaseApiResponse>() {
 
     private val TAG = NetworkSubscriber::class.java.simpleName
 
-    private val weakReference: WeakReference<DaggerViewModel> = WeakReference(viewModel)
+    private val weakReference: WeakReference<BaseViewModel> = WeakReference(viewModel)
 
     private var showDialog = true
     private var unsetProgressBar = false
@@ -26,13 +26,6 @@ abstract class NetworkSubscriber<T>(viewModel: DaggerViewModel) : DisposableObse
 
     override fun onStart() {
         super.onStart()
-        if (!unsetProgressBar)
-            weakReference.get()!!.activeRequest.value = true
-    }
-
-    fun unsetProgressBar(): NetworkSubscriber<*> {
-        this.unsetProgressBar = true
-        return this
     }
 
     fun unsetDialog(): NetworkSubscriber<T> {
@@ -40,33 +33,23 @@ abstract class NetworkSubscriber<T>(viewModel: DaggerViewModel) : DisposableObse
         return this
     }
 
-    override fun onNext(apiResponse: ApiResponse<T>) {
-        val viewModel = weakReference.get()
-        viewModel!!.activeRequest.value = false
+    @Suppress("UNCHECKED_CAST")
+    override fun onNext(apiResponse: BaseApiResponse) {
         Timber.i(apiResponse.toString())
-        if (!apiResponse.status && apiResponse.errorBody != null && apiResponse.errorBody!!.title != null) {
-            onServerError(apiResponse.errorBody!!)
-            val errors = apiResponse.errorBody
-            if (!viewModel.highlightErrorFields(errors!!.messages!!)) {
-                if (showDialog)
-                    viewModel.errorDialogData.value = ErrorDialogData(errors)
-            }
+        if (apiResponse.status!!.equals(BaseApiResponse.STATUS_ERROR) && apiResponse.errorCode != null && apiResponse.errorBody != null) {
+            onServerError(apiResponse.errorCode!!)
         } else {
-            onNextData(apiResponse.data!!)
+            onNextData(apiResponse = apiResponse as T)
         }
     }
 
     override fun onError(t: Throwable) {
-        val viewModel = weakReference.get()
-        viewModel!!.activeRequest.value = false
         onErrorData(t)
         handleError(t)
     }
 
     override fun onComplete() {
         Timber.i("Finished")
-        val viewModel = weakReference.get()
-        viewModel!!.activeRequest.value = false
         onFinished()
     }
 
@@ -78,21 +61,21 @@ abstract class NetworkSubscriber<T>(viewModel: DaggerViewModel) : DisposableObse
                 viewModel!!.errorDialogData.value = (
                         ErrorDialogData(
                             "Error",
-                            "Authorization token expired"
-                        ).setTokenExpired(true)
+                            "Invalid Api Key"
+                        )
                         )
             } else if (e.code() == 500) {
                 viewModel!!.errorDialogData.value = (
                         ErrorDialogData(
                             "Server Error",
-                            "Something went wrong, please contact 9740545801"
+                            "Something went wrong, please try later"
                         )
                         )
             } else if (e.code() == 502) {
                 viewModel!!.errorDialogData.value = (
                         ErrorDialogData(
                             "Bad Gateway",
-                            "Something went wrong, please contact 9740545801"
+                            "Something went wrong, please try later"
                         )
                         )
             } else {
@@ -101,8 +84,6 @@ abstract class NetworkSubscriber<T>(viewModel: DaggerViewModel) : DisposableObse
                 val errors = getErrorsData(responseBody)
                 if (errors == null) {
                     viewModel!!.errorDialogData.value = (ErrorDialogData("Error " + e.code(), e.response().message()))
-                } else if (!viewModel!!.highlightErrorFields(errors.messages!!)) {
-                    viewModel.errorDialogData.value = (ErrorDialogData(errors))
                 }
             }
         } else if (e is SocketTimeoutException) {
@@ -120,7 +101,7 @@ abstract class NetworkSubscriber<T>(viewModel: DaggerViewModel) : DisposableObse
 
     abstract fun onErrorData(t: Throwable)
 
-    abstract fun onServerError(errors: Errors)
+    abstract fun onServerError(string: String)
 
     abstract fun onFinished()
 

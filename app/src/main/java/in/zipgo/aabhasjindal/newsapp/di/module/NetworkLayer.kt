@@ -19,7 +19,7 @@ class NetworkLayer {
         @Provides
         get() {
             val interceptor = HttpLoggingInterceptor { message -> Timber.i(message) }
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
             return interceptor
         }
 
@@ -27,13 +27,11 @@ class NetworkLayer {
     @Provides
     fun getOkHttp(
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        cache: Cache,
-        tokenRequestInterceptor: TokenRequestInterceptor
+        cache: Cache
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(65, TimeUnit.SECONDS)
             .connectTimeout(10, TimeUnit.SECONDS)
-            .addInterceptor(tokenRequestInterceptor)
             .addInterceptor(httpLoggingInterceptor)
             .retryOnConnectionFailure(true)
             .cache(cache)
