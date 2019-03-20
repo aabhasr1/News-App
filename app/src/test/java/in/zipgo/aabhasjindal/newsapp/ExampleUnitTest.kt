@@ -1,8 +1,7 @@
-package `in`.zipgo.aabhasjindal.newsapp
+package `in`.learning.aabhasjindal.newsapp
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).

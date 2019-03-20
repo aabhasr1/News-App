@@ -11,7 +11,7 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "in.zipgo.aabhasjindal.newsapp"
+        applicationId "in.learning.aabhasjindal.newsapp"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         versionCode versions.versionCode
@@ -21,6 +21,7 @@ android {
     buildTypes {
         debug {
             debuggable true
+            minifyEnabled false
             buildConfigField "String", "API_URL", "\"https://newsapi.org\""
             buildConfigField "String", "API_KEY", "\"7eebd5f3dd1848e98b402da7473490c2\""
         }
@@ -74,6 +75,10 @@ dependencies {
     implementation 'android.arch.navigation:navigation-fragment:1.0.0-rc02'
     implementation 'android.arch.navigation:navigation-ui:1.0.0-rc02'
     implementation 'androidx.room:room-runtime:2.0.0'
+    implementation 'androidx.room:room-rxjava2:2.0.0'
     kapt 'androidx.room:room-compiler:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation "com.facebook.shimmer:shimmer:0.4.0"
+    implementation 'com.facebook.stetho:stetho:1.5.1'
 
 }

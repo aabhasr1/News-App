@@ -4,13 +4,22 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="@android:color/white"
-             tools:context=".ui.modules.NewsFragment">
+             tools:context=".ui.modules.news.NewsFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_news_list"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeToRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/shimmer_item_news_layout">
-    </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_news_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/shimmer_item_news_layout">
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <include
+            android:id="@+id/shimmer"
+            layout="@layout/shimmer_fragment_news"/>
 
 </FrameLayout>
