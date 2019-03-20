@@ -5,7 +5,6 @@ import `in`.learning.aabhasjindal.newsapp.R
 import `in`.learning.aabhasjindal.newsapp.data.model.database.Headline
 import `in`.learning.aabhasjindal.newsapp.data.rx.ObservableUtils
 import `in`.learning.aabhasjindal.newsapp.ui.base.BaseFragment
-import android.graphics.Color
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -47,6 +46,7 @@ class NewsFragment : BaseFragment(), `in`.learning.aabhasjindal.newsapp.ui.modul
         recyclerView = view!!.findViewById(R.id.rv_news_list)
         swipeRefreshLayout = view.findViewById(R.id.swipeToRefresh)
         shimmerFrameLayout = view.findViewById(R.id.shimmer)
+        swipeRefreshLayout.setColorSchemeColors(getContentActivity().resources.getColor(R.color.colorPrimary))
         recyclerView.layoutManager = LinearLayoutManager(getContentActivity())
         newsAdapter = NewsAdapter(this)
         recyclerView.adapter = newsAdapter
@@ -67,7 +67,6 @@ class NewsFragment : BaseFragment(), `in`.learning.aabhasjindal.newsapp.ui.modul
                     swipeRefreshLayout.isRefreshing = false
                 }
             })
-        swipeRefreshLayout.setColorSchemeColors(Color.BLUE)
         swipeRefreshLayout.setOnRefreshListener {
             recyclerView.visibility = View.INVISIBLE
             shimmerFrameLayout.visibility = View.VISIBLE

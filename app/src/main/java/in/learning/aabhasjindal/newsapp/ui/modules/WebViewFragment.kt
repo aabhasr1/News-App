@@ -2,6 +2,7 @@ package `in`.learning.aabhasjindal.newsapp.ui.modules
 
 import `in`.learning.aabhasjindal.newsapp.R
 import `in`.learning.aabhasjindal.newsapp.ui.base.BaseFragment
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
@@ -32,8 +33,10 @@ class WebViewFragment : BaseFragment() {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun initUI(view: View?) {
         webView = view!!.findViewById(R.id.wv_news)
+        webView.visibility = View.INVISIBLE
         webView.settings.javaScriptEnabled = true
         webView.loadUrl(param1)
         webView.isHorizontalScrollBarEnabled = false
@@ -44,6 +47,11 @@ class WebViewFragment : BaseFragment() {
                 // probably you need to open that url rather than redirect:
                 view.loadUrl(url)
                 return false // then it is not handled by default action
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                webView.visibility = View.VISIBLE
             }
         }
     }

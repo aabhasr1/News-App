@@ -72,8 +72,8 @@ dependencies {
 
 
     implementation "com.jakewharton.timber:timber:$versions.timberVersion"
-    implementation 'android.arch.navigation:navigation-fragment:1.0.0-rc02'
-    implementation 'android.arch.navigation:navigation-ui:1.0.0-rc02'
+    implementation 'android.arch.navigation:navigation-fragment:1.0.0'
+    implementation 'android.arch.navigation:navigation-ui:1.0.0'
     implementation 'androidx.room:room-runtime:2.0.0'
     implementation 'androidx.room:room-rxjava2:2.0.0'
     kapt 'androidx.room:room-compiler:2.0.0'
